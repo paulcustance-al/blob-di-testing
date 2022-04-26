@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DITesting", "DITesting\DITesting.csproj", "{896E0981-7CEB-4A3A-9F4E-D6B3DECDAA6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiTestingLibrary", "DiTestingLibrary\DiTestingLibrary.csproj", "{F62F1B88-0881-4F91-8AF7-BB5FC75B3A9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{896E0981-7CEB-4A3A-9F4E-D6B3DECDAA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{896E0981-7CEB-4A3A-9F4E-D6B3DECDAA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{896E0981-7CEB-4A3A-9F4E-D6B3DECDAA6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62F1B88-0881-4F91-8AF7-BB5FC75B3A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62F1B88-0881-4F91-8AF7-BB5FC75B3A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62F1B88-0881-4F91-8AF7-BB5FC75B3A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62F1B88-0881-4F91-8AF7-BB5FC75B3A9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
