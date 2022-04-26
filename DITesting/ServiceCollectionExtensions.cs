@@ -5,9 +5,22 @@ namespace DITesting;
 
 public static class ServiceCollectionExtensions
 {
-    public static BlobStorageBuilder AddBlobStorage(this IServiceCollection services, Action<BlobStorageOptions>? setupAction = null)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <typeparam name="T"></typeparam>
+    public static void AddBlobStorage<T>(
+        this IServiceCollection services,
+        IConfiguration configuration) 
+            where T : class, IDelegateTokenRetrieval
+
     {
-        if (setupAction != null) services.ConfigureBlobStorage(setupAction);
+        services.AddTransient<TestMessageHandler>();
+        services.AddTransient<IDelegateTokenRetrieval, T>();
+        
+        ConfigureBlobStorage(services, configuration);
 
         services
             .AddHttpClient<IBlobStorageClient, BlobStorageClient>((client, provider) =>
@@ -27,14 +40,12 @@ public static class ServiceCollectionExtensions
                     SslProtocols = options.SslProtocol
                 };
             });
-
-        return new BlobStorageBuilder(services);
     }
 
-    private static void ConfigureBlobStorage(this IServiceCollection services, Action<BlobStorageOptions> setupAction)
+    private static void ConfigureBlobStorage(IServiceCollection services, IConfiguration configuration)
     {
         services
-            .Configure(setupAction)
+            .Configure<BlobStorageOptions>(options => configuration.GetSection("BlobStorage").Bind(options))
             .AddSingleton(resolver => resolver.GetRequiredService<IOptions<BlobStorageOptions>>().Value);
     }
 }

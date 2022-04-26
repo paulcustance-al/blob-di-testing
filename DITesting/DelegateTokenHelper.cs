@@ -1,4 +1,7 @@
-﻿namespace DITesting;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace DITesting;
 
 public class DelegatedTokenHelper
 {

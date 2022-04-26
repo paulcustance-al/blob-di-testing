@@ -1,20 +1,24 @@
-﻿namespace DITesting;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
-public interface IBlobStorageBuilder
-{
-}
+namespace DITesting;
 
-public class BlobStorageBuilder : IBlobStorageBuilder
-{
-    private readonly IServiceCollection _services;
-
-    public BlobStorageBuilder(IServiceCollection services)
-    {
-        _services = services;
-    }
-
-    public void ConfigureCustomTokenRetrieval(Func<IServiceProvider, Func<Task<string>>> tokenFactory)
-    {
-        _services.AddTransient(s => new TestMessageHandler(tokenFactory(s)));
-    }
-}
+// public interface IBlobStorageBuilder
+// {
+// }
+//
+// public class BlobStorageBuilder : IBlobStorageBuilder
+// {
+//     private readonly IServiceCollection _services;
+//
+//     public BlobStorageBuilder(IServiceCollection services)
+//     {
+//         _services = services;
+//     }
+//
+//     public void ConfigureCustomTokenRetrieval(Func<IServiceProvider, Func<Task<string>>> tokenRetrieval)
+//     {
+//         _services.AddTransient(provider => new TestMessageHandler(tokenRetrieval(provider)));
+//     }
+// }

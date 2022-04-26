@@ -1,6 +1,5 @@
 using System.Security.Authentication;
 using DITesting;
-using EHR.BlobStorage.Sdk.V1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,18 +7,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<DelegatedTokenHelper>();
-
 builder.Services
-    .AddBlobStorage(options =>
-    {
-        options.SslProtocol = SslProtocols.Tls12;
-    })
-    .ConfigureCustomTokenRetrieval(provider =>
-    {
-        var tokenHelper = provider.GetRequiredService<DelegatedTokenHelper>();
-        return tokenHelper.GetToken;
-    });
+    .AddBlobStorage<DefaultDelegateTokenRetrieval>(builder.Configuration);
 
 var app = builder.Build();
 
