@@ -7,15 +7,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var settings = builder.Configuration
-    .GetSection("")
-    .Get<BlobStorageOptions>();
+// var settings = builder.Configuration
+//     .GetSection("BlobStorage")
+//     .Get<BlobStorageOptions>();
 
-builder.Services.AddBlobStorage<DefaultDelegateTokenRetrieval>(settings);
-builder.Services.AddBlobStorage<DefaultDelegateTokenRetrieval>(options =>
-{
-    options.Name = "";
-});
+//builder.Services.AddBlobStorage<DefaultDelegateTokenRetrieval>(settings);
+builder.Services.AddBlobStorage<DefaultDelegateTokenRetrieval>(option => builder
+    .Configuration
+    .GetSection("BlobStorage")
+    .Bind(option));
 
 var app = builder.Build();
 

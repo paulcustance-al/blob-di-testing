@@ -8,7 +8,7 @@ namespace DiTestingLibrary
     {
         private readonly IDelegateTokenRetrieval _tokenRetriever;
 
-        public TestMessageHandler(IDelegateTokenRetrieval tokenRetriever)
+        public TestMessageHandler(IDelegateTokenRetrieval tokenRetriever, BlobStorageOptions options)
         {
             _tokenRetriever = tokenRetriever;
         }

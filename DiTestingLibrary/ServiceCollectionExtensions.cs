@@ -2,6 +2,7 @@
 using System.Net.Http;
 using EHR.BlobStorage.Sdk.V1;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace DiTestingLibrary
 {
@@ -12,13 +13,17 @@ namespace DiTestingLibrary
             BlobStorageOptions userOptions)
             where T : class, IDelegateTokenRetrieval
         {
-            services.AddOptions<BlobStorageOptions>().Configure(options =>
-            {
-                options.Name = userOptions.Name;
-                options.BaseAddress = userOptions.BaseAddress;
-                options.SslProtocol = options.SslProtocol;
-            });
+            services
+                .AddOptions<BlobStorageOptions>()
+                .Configure(options =>
+                {
+                    options.Name = userOptions.Name;
+                    options.BaseAddress = userOptions.BaseAddress;
+                    options.SslProtocol = userOptions.SslProtocol;
+                });
             
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<BlobStorageOptions>>().Value);
+
             services.AddBlobStorageClient<T>();
         }
         
@@ -27,7 +32,10 @@ namespace DiTestingLibrary
             Action<BlobStorageOptions> setupAction)
             where T : class, IDelegateTokenRetrieval
         {
-            services.Configure(setupAction);
+            services
+                .Configure(setupAction)
+                .AddSingleton(resolver => resolver.GetRequiredService<IOptions<BlobStorageOptions>>().Value);
+            
             services.AddBlobStorageClient<T>();
         }
 
@@ -55,6 +63,13 @@ namespace DiTestingLibrary
                         SslProtocols = options.SslProtocol
                     };
                 });
+        }
+        
+        private static void ConfigureBlobStorage(this IServiceCollection services, Action<BlobStorageOptions> setupAction)
+        {
+            services
+                .Configure(setupAction)
+                .AddSingleton(resolver => resolver.GetRequiredService<IOptions<BlobStorageOptions>>().Value);
         }
     }
 }
