@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using DiTestingLibrary;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +7,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddBlobStorage<DefaultDelegateTokenRetrieval>(builder.Configuration);
+var settings = builder.Configuration
+    .GetSection("")
+    .Get<BlobStorageOptions>();
+
+builder.Services.AddBlobStorage<DefaultDelegateTokenRetrieval>(settings);
+builder.Services.AddBlobStorage<DefaultDelegateTokenRetrieval>(options =>
+{
+    options.Name = "";
+});
 
 var app = builder.Build();
 
